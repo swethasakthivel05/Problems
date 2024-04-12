@@ -1,0 +1,25 @@
+class Solution {
+    public int trap(int[] a) {
+
+        int left_Max = a[0];
+        Stack < Integer > right_Max = new Stack ();
+
+        right_Max.push( a[a.length - 1]);
+        for( int i = a.length-2; i >= 2; i-- ){
+            right_Max.push( Math.max( right_Max.peek(), a[i]));
+        } 
+
+        int tot_Water = 0;
+
+        for( int i = 1; i < a.length-1; i++ ){
+            int minimum = Math.min( left_Max, right_Max.peek());
+            int temp = minimum - a[i];
+            tot_Water += Math.max( 0, temp);
+
+            left_Max = Math.max( left_Max, a[i]);
+            right_Max.pop();
+        }
+
+        return tot_Water;
+    }
+}
